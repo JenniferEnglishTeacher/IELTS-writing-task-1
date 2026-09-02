@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Guided IELTS Academic Writing Task 1 graph practice with sentence patterns and feedback.">
+  <title>IELTS Graph Writing Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Franklin:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#app">Skip to practice</a>
+  <header class="site-header">
+    <a class="brand" href="#/" aria-label="IELTS Graph Writing Studio home">
+      <span class="brand-mark">JW</span>
+      <span><strong>IELTS Graph Writing</strong><small>Jennifer’s guided practice studio</small></span>
+    </a>
+    <div class="header-actions">
+      <button class="quiet-button" id="student-button" type="button">Student details</button>
+      <span class="progress-pill" id="global-progress">0 / 20 practised</span>
+    </div>
+  </header>
+  <main id="app" tabindex="-1"></main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="student-dialog">
+    <form method="dialog" id="student-form">
+      <div class="dialog-heading">
+        <div><p class="eyebrow">Your learning record</p><h2>Student details</h2></div>
+        <button class="icon-button" value="cancel" aria-label="Close">×</button>
+      </div>
+      <label>Name<input id="student-name" autocomplete="name" required placeholder="Your name"></label>
+      <label>Class / access code<input id="access-code" type="password" autocomplete="current-password" placeholder="Provided by your teacher"></label>
+      <p class="form-note">Your name is saved only on this device. The access code is sent only to the teacher’s secure review service.</p>
+      <button class="primary-button" value="save">Save details</button>
+    </form>
+  </dialog>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
