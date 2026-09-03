@@ -1,6 +1,6 @@
 # IELTS Graph Writing Studio
 
-An expandable, mobile-friendly Writing Task 1 practice site for Jennifer's students. The first collection contains 20 increase/decrease/fluctuation graphs and six guided writing sections.
+An expandable, mobile-friendly Writing Task 1 practice site for Jennifer's students. The first collection contains 21 increase/decrease/fluctuation graphs and six guided writing sections.
 
 ## What students can do
 
@@ -14,11 +14,13 @@ An expandable, mobile-friendly Writing Task 1 practice site for Jennifer's stude
 
 ## Add another graph
 
-1. Put the image in `assets/graphs/` using the next sequential name, for example `g21.jpg`.
+1. Put the image in `assets/graphs/` using the next sequential name, for example `g22.jpg`.
 2. Add one object to the `GRAPHS` array in `data.js` with the next `id`.
 3. Include `title`, `years`, `metric`, `tags`, `prompt`, `hint`, and six `sample` paragraphs.
 
 The dashboard and route are generated automatically.
+
+For a task with multiple charts, add an `images` array. A graph may also supply its own six-section `sections` array when the standard upward/downward/fluctuation labels do not accurately describe its data. Graph 21 demonstrates both options.
 
 ## Secure AI + Google Drive setup
 

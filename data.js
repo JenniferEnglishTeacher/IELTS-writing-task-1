@@ -111,7 +111,70 @@ const GRAPHS = [
   {id:17, title:'Women in employment', years:'2003–2009', metric:'percentage employed', tags:['line','5 countries'], prompt:'Percentages of women aged 15–64 in employment in five countries from 2003 to 2009.', hint:'Iceland remains highest; Chile and Germany rise; Turkey stays lowest.', sample:['The line graph compares employment rates among women aged 15–64 in five countries from 2003 to 2009.','Overall, Iceland consistently recorded the highest rate, whereas Turkey remained the lowest.','Chile rose from 35% to 41%, while Germany increased from 59% to 65%.','Iceland edged down from about 81% to 78% by 2009.','Turkey dipped from 25% to 22% before recovering to its starting level, while Canada stayed close to 70%.','The stable ranking suggests persistent differences in female employment across the five countries.']},
   {id:18, title:'Second languages in New Zealand', years:'2006–2014', metric:'percentage of primary students', tags:['line','6 languages'], prompt:'Percentages of New Zealand primary-school students learning six second languages from 2006 to 2014.', hint:'French stays highest; Japanese falls; Chinese rises and overtakes several languages.', sample:['The line graph shows the percentages of New Zealand primary pupils learning six second languages from 2006 to 2014.','Overall, French remained the most popular language, while Chinese grew strongly as Japanese and German declined.','Chinese rose from about 4% to 13%, overtaking German and other languages near the end.','Japanese fell substantially from 28% to 17%, and German declined from around 14% to 7%.','French fluctuated between approximately 28% and 33%, finishing close to its initial level.','The changes may indicate growing interest in Chinese alongside weakening demand for Japanese and German.']},
   {id:19, title:'India’s GDP by sector', years:'1960–2000', metric:'percentage contribution to GDP', tags:['bar','3 sectors'], prompt:'Agriculture, industry and services as shares of India’s GDP from 1960 to 2000.', hint:'Agriculture declines; services rise to become largest; industry increases modestly.', sample:['The bar chart compares the contributions of agriculture, industry and services to India’s GDP from 1960 to 2000.','Overall, agriculture declined dramatically, while services rose to become the largest sector; industry changed more modestly.','Services increased from about 17% to 63%, and industry grew from roughly 16% to 25%.','Agriculture more than halved, falling from approximately 63% to 14%.','The service share rose steadily, with particularly strong growth after 1980.','The figures indicate a long-term structural shift in India’s economy from agriculture towards services.']},
-  {id:20, title:'Five portions of fruit and vegetables', years:'2001–2008', metric:'percentage of people', tags:['bar','3 groups'], prompt:'Percentages of men, women and children in the UK who ate five portions of fruit and vegetables per day from 2001 to 2008.', hint:'All three groups rise to a late peak then ease; women remain highest throughout.', sample:['The bar chart illustrates the percentages of UK men, women and children eating five daily portions of fruit and vegetables from 2001 to 2008.','Overall, women consistently recorded the highest proportions, while children remained the lowest; all groups rose before easing near the end.','Children’s figure more than doubled from about 12% to 26%, while men’s rose from 17% to around 29%.','After their peaks, the figures slipped to roughly 24% for children, 27% for men and 31% for women in 2008.','Women’s proportion climbed from 21% to a peak of about 34% in 2006 before declining slightly.','The broad rise may indicate increasing awareness of healthy eating during the period.']}
+  {id:20, title:'Five portions of fruit and vegetables', years:'2001–2008', metric:'percentage of people', tags:['bar','3 groups'], prompt:'Percentages of men, women and children in the UK who ate five portions of fruit and vegetables per day from 2001 to 2008.', hint:'All three groups rise to a late peak then ease; women remain highest throughout.', sample:['The bar chart illustrates the percentages of UK men, women and children eating five daily portions of fruit and vegetables from 2001 to 2008.','Overall, women consistently recorded the highest proportions, while children remained the lowest; all groups rose before easing near the end.','Children’s figure more than doubled from about 12% to 26%, while men’s rose from 17% to around 29%.','After their peaks, the figures slipped to roughly 24% for children, 27% for men and 31% for women in 2008.','Women’s proportion climbed from 21% to a peak of about 34% in 2006 before declining slightly.','The broad rise may indicate increasing awareness of healthy eating during the period.']},
+  {
+    id:21,
+    title:'AI use in European enterprises',
+    years:'2024–2025',
+    metric:'percentage of enterprises',
+    tags:['bar','two charts','AI adoption'],
+    prompt:'The charts below show the percentage of enterprises in European countries that used artificial intelligence (AI) technologies in 2024 and 2025 — one by enterprise size class, and the other by individual country. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.',
+    hint:'Focus on the widespread rise in AI use, Denmark’s leading 2025 share, Romania’s lowest figure, and the much greater uptake among large enterprises.',
+    source:'https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Use_of_artificial_intelligence_in_enterprises',
+    images:[
+      {src:'assets/graphs/g21-1.png',alt:'Bar chart comparing the percentages of enterprises using AI technologies by European country in 2024 and 2025',caption:'AI adoption by country'},
+      {src:'assets/graphs/g21-2.png',alt:'Bar chart comparing EU enterprise AI use by enterprise size in 2024 and 2025',caption:'AI adoption by enterprise size'}
+    ],
+    sections:[
+      {
+        id:'introduction',number:'01',title:'Introduction',subtitle:'Paraphrase what the two charts compare',color:'blue',
+        patterns:['The two [chart type]s compare [A] and [B], one broken down by [X] and the other by [Y].']
+      },
+      {
+        id:'overview',number:'02',title:'Two general trends',subtitle:'Summarise the overall rise, size gap and country ranking',color:'violet',
+        patterns:[
+          'Overall, it is clear that [main trend], while [contrast].',
+          'In terms of [category], [A] recorded by far the highest [metric], while [B] remained at the bottom of the ranking.'
+        ]
+      },
+      {
+        id:'upward',number:'03',title:'Enterprise-size growth',subtitle:'Compare changes among all, large, medium and small enterprises',color:'green',
+        patterns:[
+          'Looking first at [category] in detail, the proportion of [X] using [technology] rose from [A]% in [year 1] to [B]% in [year 2].',
+          '[X] saw [metric] climb from [A]% to [B]%, over [multiple] the rate recorded among [Y], which increased from approximately [C]% to [D]%.',
+          '[X] occupied the middle ground, with [metric] growing from [A]% to [B]%.'
+        ]
+      },
+      {
+        id:'downward',number:'04',title:'Country leaders & gains',subtitle:'Describe Denmark and the next-highest countries',color:'orange',
+        patterns:[
+          'Turning to [category], [X] stood out as the clear leader, with [metric] climbing from [A]% to [B]%, an increase of almost [N] percentage points—the largest rise of any country shown.',
+          'It was followed by [X] and [Y], both of which also exceeded [N]% in [year].',
+          'It was followed by [X] and [Y], climbing to [N1]% and [N2]% respectively in [year].'
+        ]
+      },
+      {
+        id:'fluctuation',number:'05',title:'Lowest figures & contrast',subtitle:'Report the countries below 10% without inventing a decline',color:'pink',
+        patterns:[
+          'At the opposite end of the scale, [X], [Y] and [Z] recorded the lowest figures, each remaining below [N]% in [year], despite modest gains.',
+          'In contrast, [X], [Y] and [Z] recorded the lowest figures, each remaining below [N]% in [year], despite modest gains.',
+          'In comparison, [X], [Y] and [Z] recorded the lowest figures, each remaining below [N]% in [year], despite modest gains.'
+        ]
+      },
+      {
+        id:'conclusion',number:'06',title:'Conclusion',subtitle:'State the shared direction shown by both charts',color:'teal',
+        patterns:['In conclusion, both charts indicate a [strength] upward trend in [metric] across [places and groups].']
+      }
+    ],
+    sample:[
+      'The two bar charts compare the percentage of enterprises across the European Union that used artificial intelligence technologies in 2024 and 2025, one broken down by company size and the other by individual country.',
+      'Overall, it is clear that the adoption of AI technologies increased substantially across almost all business sizes and countries between the two years, while larger firms remained consistently far more likely to use such technologies than smaller ones. In terms of geography, Denmark recorded by far the highest uptake in both years, while Romania remained at the bottom of the ranking throughout the period.',
+      'Looking first at the breakdown by size class in detail, the average proportion of all EU enterprises using AI technologies surged from 13.48% in 2024 to 19.95% in 2025. Large enterprises saw usage climb from 41.17% to 55.03%, over three times the rate recorded among small enterprises, which increased from approximately 11.21% to 17.00% over the same period. Medium-sized enterprises occupied the middle ground, with AI adoption growing from 20.97% to 30.36%.',
+      'Turning to the country-level data, Denmark stood out as the clear leader, with AI adoption climbing from around 27.6% to 42.03%, an increase of almost 15 percentage points—the largest rise of any country shown. It was followed by Finland and Sweden, both of which also exceeded 35% in 2025.',
+      'At the opposite end of the scale, Romania, Poland and Bulgaria recorded the lowest figures, each remaining below 10% in 2025 despite modest gains.',
+      'In conclusion, both charts indicate a strong upward trend in AI use across European countries and enterprises.'
+    ]
+  }
 ];
 
 const SITE_CONFIG = {
