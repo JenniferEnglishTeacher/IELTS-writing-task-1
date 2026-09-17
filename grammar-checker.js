@@ -27,6 +27,20 @@
     drop: 'drops', grow: 'grows', fluctuate: 'fluctuates'
   };
 
+  const BASE_FORM = {
+    illustrates: 'illustrate', shows: 'show', compares: 'compare',
+    depicts: 'depict', demonstrates: 'demonstrate', presents: 'present',
+    gives: 'give', rises: 'rise', falls: 'fall', increases: 'increase',
+    decreases: 'decrease', declines: 'decline', climbs: 'climb',
+    drops: 'drop', grows: 'grow', fluctuates: 'fluctuate'
+  };
+
+  const ADJECTIVE_FORM = {
+    sharply: 'sharp', dramatically: 'dramatic', significantly: 'significant',
+    considerably: 'considerable', steadily: 'steady', gradually: 'gradual',
+    slightly: 'slight', rapidly: 'rapid'
+  };
+
   const MISSPELLINGS = {
     comparision: 'comparison', comparisions: 'comparisons',
     begining: 'beginning', occured: 'occurred', untill: 'until',
@@ -46,7 +60,9 @@
     student: 'students', tourist: 'tourists', patient: 'patients',
     clinic: 'clinics', attraction: 'attractions', car: 'cars', region: 'regions',
     source: 'sources', language: 'languages', sector: 'sectors',
-    person: 'people', line: 'lines', bar: 'bars', figure: 'figures'
+    person: 'people', line: 'lines', bar: 'bars', figure: 'figures',
+    graph: 'graphs', chart: 'charts', table: 'tables', diagram: 'diagrams',
+    enterprise: 'enterprises', technology: 'technologies', percentage: 'percentages'
   };
 
   function matchCase(source, replacement) {
@@ -107,17 +123,24 @@
     });
     apply(/\binformations\b/gi, (m) => matchCase(m, 'information'), 'Word form', '“Information” is uncountable in English.');
     apply(/\bdatas\b/gi, (m) => matchCase(m, 'data'), 'Word form', 'Use “data”, not “datas”.');
+    apply(/\bthe using of\b/gi, (m) => matchCase(m, 'the use of'), 'Word form', 'Use the noun “use” after “the”; “using” is a verb form.');
+    apply(/\b(one|which|that|it|was|were|is|are)\s+broke down\b/gi,
+      (m, lead) => lead + ' broken down', 'Verb form', 'Use the past participle “broken” in the passive phrase “broken down”.');
+    apply(/\b(enterprises|companies)\s+(size|category|type)\b/gi,
+      (m, noun, label) => noun.toLowerCase() === 'companies' ? 'company ' + label : 'enterprise ' + label,
+      'Noun form', 'Use a singular noun as a modifier before another noun: “enterprise size”.');
 
     // Number and noun agreement.
     const countNouns = Object.keys(PLURAL_NOUNS).join('|');
-    apply(new RegExp('\\b(2|3|4|5|6|7|8|9|10|[1-9]\\d+)\\s+(' + countNouns + ')\\b', 'gi'),
+    const compoundHeads = 'admissions?|clinics?|data|figures?|categories|charts?|graphs?|tables?|diagrams?|sizes?|classes|types?|technologies|use|users';
+    apply(new RegExp('\\b(2|3|4|5|6|7|8|9|10|[1-9]\\d+)\\s+(' + countNouns + ')\\b(?!\\s+(?:' + compoundHeads + ')\\b)', 'gi'),
       (m, number, noun) => number + ' ' + matchCase(noun, PLURAL_NOUNS[noun.toLowerCase()]),
       'Noun number', 'A count noun must be plural after a number greater than one.');
-    apply(new RegExp('\\b(two|three|four|five|six|seven|eight|nine|ten|many|several|both)\\s+(' + countNouns + ')\\b', 'gi'),
+    apply(new RegExp('\\b(two|three|four|five|six|seven|eight|nine|ten|many|several|both)\\s+(' + countNouns + ')\\b(?!\\s+(?:' + compoundHeads + ')\\b)', 'gi'),
       (m, number, noun) => number + ' ' + matchCase(noun, PLURAL_NOUNS[noun.toLowerCase()]),
       'Noun number', 'Use a plural count noun after this determiner.');
     const smallNumbers = {2:'two',3:'three',4:'four',5:'five',6:'six',7:'seven',8:'eight',9:'nine',10:'ten'};
-    apply(/\b(2|3|4|5|6|7|8|9|10)\s+(hospitals|cities|countries|categories|groups|years|months|students|tourists|patients|clinics|attractions|cars|regions|sources|languages|sectors|lines|bars|figures)\b/gi,
+    apply(/\b(2|3|4|5|6|7|8|9|10)\s+(hospitals|cities|countries|categories|groups|years|months|students|tourists|patients|clinics|attractions|cars|regions|sources|languages|sectors|lines|bars|figures|graphs|charts|tables|diagrams|enterprises|technologies|percentages)\b/gi,
       (m, number, noun) => smallNumbers[number] + ' ' + noun,
       'Academic style', 'In formal prose, small whole numbers are usually written as words.', 'style');
     apply(/\b(one|each|every)\s+(hospitals|cities|countries|categories|groups|years|months|students|tourists|patients|clinics|attractions|cars|regions|sources|languages|sectors|lines|bars|figures)\b/gi,
@@ -129,7 +152,7 @@
       (m, subject, verb) => subject + ' ' + matchCase(verb, THIRD_PERSON[verb.toLowerCase()]),
       'Subject–verb agreement', 'A singular subject such as “graph” takes a third-person singular verb.');
     apply(/\b(graphs|charts|figures|tables|diagrams)\s+(illustrates|shows|compares|depicts|demonstrates|presents|gives)\b/gi,
-      (m, subject, verb) => subject + ' ' + verb.toLowerCase().replace(/ies$/, 'y').replace(/es$/, '').replace(/s$/, ''),
+      (m, subject, verb) => subject + ' ' + BASE_FORM[verb.toLowerCase()],
       'Subject–verb agreement', 'A plural subject takes the base form of the verb.');
     apply(/\b(people|students|tourists|patients|figures|admissions|sales|categories)\s+(is|was|has)\b/gi,
       (m, subject, verb) => subject + ' ' + ({is:'are',was:'were',has:'have'}[verb.toLowerCase()]),
@@ -157,6 +180,26 @@
     apply(/\b(is|are|was|were)\s+(show|illustrate|compare|present)\b/gi,
       (m, aux, verb) => aux + ' ' + ({show:'shown',illustrate:'illustrated',compare:'compared',present:'presented'}[verb.toLowerCase()]),
       'Verb form', 'A passive construction needs a past participle after “be”.');
+    apply(/\b(a)\s+(increase|upward trend|overall rise)\b/gi,
+      (m, article, noun) => matchCase(article, 'an') + ' ' + noun,
+      'Article', 'Use “an” before a word that begins with a vowel sound.');
+    apply(/\b(an)\s+(rise|fall|drop|decline|change|chart|graph)\b/gi,
+      (m, article, noun) => matchCase(article, 'a') + ' ' + noun,
+      'Article', 'Use “a” before a word that begins with a consonant sound.');
+    apply(/\b(rose|fell|grew|increased|decreased|declined|climbed|dropped|fluctuated)\s+(sharp|dramatic|significant|considerable|steady|gradual|slight|rapid)\b/gi,
+      (m, verb, adjective) => verb + ' ' + adjective + 'ly',
+      'Word form', 'Use an adverb to describe how a verb changed.');
+    apply(/\b(a|an)\s+(sharply|dramatically|significantly|considerably|steadily|gradually|slightly|rapidly)\s+(increase|decrease|rise|fall|drop|decline)\b/gi,
+      (m, article, adverb, noun) => article + ' ' + ADJECTIVE_FORM[adverb.toLowerCase()] + ' ' + noun,
+      'Word form', 'Use an adjective—not an adverb—to modify a noun.');
+    apply(/\breached to\b/gi, (m) => matchCase(m, 'reached'), 'Verb form', '“Reach” takes a direct object; do not add “to”.');
+    apply(/\b(one of the)\s+(country|city|category|group|enterprise|figure|year)\b/gi,
+      (m, lead, noun) => lead + ' ' + PLURAL_NOUNS[noun.toLowerCase()],
+      'Noun number', 'Use a plural noun after “one of the”.');
+    apply(/\b(more)\s+(higher|lower|larger|smaller|greater|fewer)\b/gi,
+      (m, extra, comparative) => comparative, 'Comparison', 'Do not use “more” with an adjective that is already comparative.');
+    apply(/\b(most)\s+(highest|lowest|largest|smallest|greatest)\b/gi,
+      (m, extra, superlative) => superlative, 'Comparison', 'Do not use “most” with an adjective that is already superlative.');
 
     // Tense in explicit completed-year clauses (the reporting verb “shows/illustrates” stays present).
     apply(/\b(In\s+(?:19\d{2}|20(?:0\d|1\d|2[0-5]))\s*,\s*[^,.;]{0,60}?)\b(rise|rises|fall|falls|increase|increases|decrease|decreases|decline|declines|climb|climbs|drop|drops|grow|grows)\b/gi,
@@ -166,7 +209,7 @@
     // Relative clauses and reduced relative clauses.
     apply(/\b(people|students|tourists|patients|men|women)\s+which\b/gi,
       (m, noun) => noun + ' who', 'Relative clause', 'Use “who” for people in a relative clause.');
-    apply(/\b(graph|chart|figure|table|category|line|bar)\s+who\b/gi,
+    apply(/\b(graph|chart|figure|table|category|line|bar|hospital|city|country|enterprise|company|technology)\s+who\b/gi,
       (m, noun) => noun + ' which', 'Relative clause', 'Use “which” or “that” for a thing, not “who”.');
     apply(/\b(which|that|who)\s+(it|they|he|she)\s+/gi,
       (m, relative) => relative + ' ', 'Relative clause', 'Do not repeat the subject after a relative pronoun.');
@@ -207,6 +250,9 @@
     apply(/\bBecause\s+([^.;]+?),\s+so\s+/gi,
       (m, clause) => 'Because ' + clause + ', ',
       'Conjunction', 'Do not use “because” and “so” together in this structure.');
+    apply(/,\s*one broken down by\s+([^,.;]+),\s*one by\s+([^.;]+)([.!?]?)$/gi,
+      (m, first, second, punctuation) => ', one broken down by ' + first.trim() + ' and the other by ' + second.trim() + punctuation,
+      'Parallel sentence structure', 'Use the parallel pair “one … and the other …” to distinguish the two charts.');
 
     // Punctuation patterns after sentence grammar is normalised.
     apply(/\b(Overall|However|Nevertheless|Moreover|Therefore)\s+(?!,)/gi,
